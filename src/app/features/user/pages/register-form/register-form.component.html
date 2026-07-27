@@ -1,0 +1,146 @@
+<div class="container">
+  <div class="card">
+    <h2>Registro de Usuario</h2>
+    <p class="subtitle">Completa la información para crear tu cuenta.</p>
+
+    <form [formGroup]="form">
+      <div class="form-group">
+        <label for="name">Nombre completo</label>
+
+        <input formControlName="name" id="name" type="text" placeholder="Ingresa tu nombre" />
+
+        <small class="error" *ngIf="isInvalid('name', 'required')">
+          El nombre es obligatorio.
+        </small>
+
+        <small class="error" *ngIf="isInvalid('name', 'minlength')">
+          El nombre debe tener al menos 3 caracteres.
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="apodo">Nombre de usuario</label>
+
+        <input formControlName="apodo" id="apodo" type="text" placeholder="Ingresa tu nombre de usuario" />
+
+        <small class="error" *ngIf="isInvalid('apodo', 'required')">
+          El nombre es obligatorio.
+        </small>
+
+        <small class="error" *ngIf="isInvalid('apodo', 'minlength')">
+          El nombre debe tener al menos 5 caracteres.
+        </small>
+
+        <small class="error" *ngIf="isInvalid('apodo', 'pattern')">
+          El nombre de usuario solo puede contener letras, números y guion bajo (_).
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="age">Edad</label>
+
+        <input formControlName="age" id="age" type="number" placeholder="Ej. 25" />
+
+        <small class="error" *ngIf="isInvalid('age', 'required')">
+          La edad es obligatoria.
+        </small>
+
+        <small class="error" *ngIf="isInvalid('age', 'min')">
+          La edad debe ser mayor o igual a 15.
+        </small>
+
+        <small class="error" *ngIf="isInvalid('age', 'max')">
+          La edad no puede ser mayor a 90.
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Correo electronico</label>
+
+        <input formControlName="email" id="email" type="email" placeholder="correo@ejemplo.com" />
+
+        <small class="error" *ngIf="isInvalid('email', 'required')">
+          El correo es obligatorio.
+        </small>
+
+        <small class="error" *ngIf="isInvalid('email', 'email')">
+          Ingresa un correo electrónico válido.
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+
+        <input formControlName="password" [type]="showPassword ? 'text' : 'password'" id="password"
+          placeholder="••••••••" />
+
+        <label>
+          <input type="checkbox" (change)="showPassword = !showPassword">
+          Mostrar contraseña
+        </label>
+
+        <small class="error" *ngIf="isInvalid('password', 'required')">
+          La contraseña es obligatoria.
+        </small>
+
+        <small class="error" *ngIf="isInvalid('password', 'minlength')">
+          La contraseña debe tener al menos 8 caracteres.
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="passwordCon">Confirmar contraseña</label>
+
+        <input formControlName="passwordCon" [type]="showPasswordCon ? 'text' : 'password'" id="passwordCon"
+          placeholder="••••••••" />
+
+        <label>
+          <input type="checkbox" (change)="showPasswordCon = !showPasswordCon">
+          Mostrar contraseña
+        </label>
+
+        <small class="error" *ngIf="isInvalid('passwordCon', 'required')">
+          La contraseña es obligatoria.
+        </small>
+
+        <small class="error" *ngIf="isInvalid('passwordCon', 'minlength')">
+          La contraseña debe tener al menos 8 caracteres.
+        </small>
+
+        <small class="error" *ngIf="form.hasError('passwordMismatch') && form.get('passwordCon')?.touched">
+
+          Las contraseñas no coinciden.
+
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <input formControlName="terminos" type="checkbox" />
+          Acepto los términos y condiciones
+        </label>
+
+        <small class="error" *ngIf="isInvalid('terminos', 'requiredTrue')">
+          Debes aceptar los términos y condiciones.
+        </small>
+      </div>
+
+      <button (click)="onClick()" type="submit" [disabled]="form.invalid">
+        Registrarse
+      </button>
+      <div *ngIf="datosRegistrados" class="resultado">
+
+        <h3>Registro exitoso</h3>
+
+        <p><strong>Nombre:</strong> {{ datosRegistrados.nombre }}</p>
+
+        <p><strong>Usuario:</strong> {{ datosRegistrados.usuario }}</p>
+
+        <p><strong>Edad:</strong> {{ datosRegistrados.edad }}</p>
+
+        <p><strong>Correo:</strong> {{ datosRegistrados.correo }}</p>
+
+      </div>
+    </form>
+  </div>
+</div>
